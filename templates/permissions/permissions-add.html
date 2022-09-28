@@ -1,0 +1,105 @@
+{% extends 'adminbase.html' %}
+{% load static %}
+{% block contents %}
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-body">
+            <!-- Basic Horizontal form layout section start -->
+            <section id="basic-horizontal-layouts">
+                <div class="row" style="justify-content: center;">
+                    <div class="col-md-9 col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">
+                                    <a href="{% url 'permissions_list' %}" style="color: inherit;text-decoration: inherit;"><i data-feather="arrow-left"></i>Add</a>
+                                </h4>
+                                {% comment %} <div class="col-auto text-left float-left ml-auto"></div> {% endcomment %}
+                            </div>
+                            <div class="card-body">
+                                    <!--messages-->
+                                    {% if messages %}
+                                    <!-- <ul class="alert-warning"> -->
+                                    {% for message in messages %}
+                                <span class="alert alert-{{message.tags}}">
+                                    {% if message.tags %} {% endif %}{{ message }}
+                                </span>
+                                {% endfor %}
+                                <!-- </ul> -->
+                                {% endif %}
+                                <!--messages-->
+                                <form id="addRoleForm" class="row" action="#" method="post">
+                                    {% csrf_token %}
+                                    <div class="col-12">
+                                        <label class="form-label" for="modalRoleName">Role Name</label>
+                                        <input type="text" id="role" name="role" class="form-control"
+                                            placeholder="Please enter role" data-msg="Please enter role"
+                                            title="Allow only english lowercase letters in input textbox" pattern="[a-z]+"
+                                            required />   
+                                    </div>
+                                    <div class="col-12">
+                                        <h4 class="mt-2 pt-50">Role Permissions</h4>
+                                        <!-- Permission table -->
+                                        <div class="table-responsive">
+                                            <table class="table table-flush-spacing">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="text-nowrap fw-bolder">
+                                                            Administrator Access
+                                                            <span data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Allows a full access to the system">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" id="selectAll">
+                                                                <label class="form-check-label" for="selectAll"> Select All </label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    {% for modules in all_modules %}
+                                                    <tr>
+                                                        <td class="text-nowrap fw-bolder">{{modules.name}}</td>
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <div class="form-check me-3 me-lg-5">
+                                                                    <input class="form-check-input" name="{{modules.name}}-read" type="checkbox">
+                                                                    <label class="form-check-label" for="userManagementRead"> Read </label>
+                                                                </div>
+                                                                <div class="form-check me-3 me-lg-5">
+                                                                    <input class="form-check-input" name="{{modules.name}}-add" type="checkbox">
+                                                                    <label class="form-check-label" for="userManagementAdd"> Add </label>
+                                                                </div>
+                                                                <div class="form-check me-3 me-lg-5">
+                                                                    <input class="form-check-input" name="{{modules.name}}-edit" type="checkbox">
+                                                                    <label class="form-check-label" for="userManagementEdit"> Edit </label>
+                                                                </div>
+                                                                <div class="form-check me-3 me-lg-5">
+                                                                    <input class="form-check-input" name="{{modules.name}}-delete" type="checkbox">
+                                                                    <label class="form-check-label" for="userManagementDelete"> Delete </label>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- Permission table -->
+                                    </div>
+                                    <div class="col-12 text-center mt-2">
+                                        <button type="submit" class="btn btn-primary me-1">Submit</button>
+                                        <a href="#" type="button" class="btn btn-outline-secondary">Discard</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Basic Horizontal form layout section end -->
+        </div>
+    </div>
+</div>
+{% endblock contents %}

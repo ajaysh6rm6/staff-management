@@ -1,0 +1,111 @@
+{% extends 'adminbase.html' %}
+{% load static %}
+{% block contents %}
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">Role</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item active">role list
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-body">
+
+            <!-- Hoverable rows start -->
+            <div class="row" id="table-hover-row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="col-auto text-left float-left ml-auto">
+                                <a href="{% url 'permissions_add' %}" type="button" class="btn btn-primary">
+                                <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                  </svg>&nbsp; Add role</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <!--messages-->
+                                {% if messages %}
+                                <!-- <ul class="alert-warning"> -->
+                                {% for message in messages %}
+                            <span class="alert alert-{{message.tags}}">
+                                {% if message.tags %} {% endif %}{{ message }}
+                            </span>
+                            {% endfor %}
+                            <!-- </ul> -->
+                            {% endif %}
+                            <!--messages-->
+                            </p>
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="dtBasicExample" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Role Name</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {% for i in list_roles %}
+                                        <tr>
+                                            <td>
+                                                <span class="fw-bold">{{i.name}}</span>   
+                                            </td>
+                                            <td>
+                                                <a href="#danger-{{i.id}}" data-bs-toggle="modal" data-bs-target="#danger-{{i.id}}">
+                                                    <i data-feather="trash" class="me-50"></i>
+                                                </a>
+                                                <a href="{% url 'permissions_edit' i.id %}">
+                                                    <i data-feather="edit" class="me-50"></i>
+                                                </a>
+                                            </td>
+                                            <div class="modal fade modal-danger text-start" id="danger-{{i.id}}"
+                                                tabindex="-1" aria-labelledby="myModalLabel120" style="display: none;"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="myModalLabel120">Are you sure you want to delete?</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <a href="{% url 'permissions_del' i.id %}">
+                                                                <button type="button"
+                                                                    class="btn btn-danger waves-effect waves-float waves-light"
+                                                                    data-bs-dismiss="modal">Accept</button>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Hoverable rows end -->
+
+        </div>
+    </div>
+</div>
+<!-- END: Content-->
+
+{% endblock contents %}
